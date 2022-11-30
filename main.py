@@ -1,24 +1,34 @@
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 from jinja2 import Environment, FileSystemLoader, select_autoescape
-from year_calc import years_old, validate_form
-from collect_data import wines
-
-env = Environment(
-    loader=FileSystemLoader('.'),
-    autoescape=select_autoescape(['html', 'xml'])
-)
-
-template = env.get_template('template.html')
+import argparse
+from year_calc import years_old, get_number_end
+from collect_wines import wines_processing
 
 
-rendered_page = template.render(
-    years_old=years_old,
-    word_form=validate_form(years_old),
-    wines=wines,
-)
+def main():
+    env = Environment(
+        loader=FileSystemLoader('.'),
+        autoescape=select_autoescape(['html', 'xml'])
+    )
 
-with open('index.html', 'w', encoding="utf-8") as file:
-    file.write(rendered_page)
+    template = env.get_template('template.html')
 
-server = HTTPServer(('0.0.0.0', 8000), SimpleHTTPRequestHandler)
-server.serve_forever()
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--path', help='Путь до вашего файла', default='wines.xlsx')
+    args = parser.parse_args()
+
+    rendered_page = template.render(
+        years_old=years_old,
+        word_form=get_number_end(years_old),
+        wines=wines_processing(args.path),
+    )
+
+    with open('index.html', 'w', encoding="utf-8") as file:
+        file.write(rendered_page)
+
+    server = HTTPServer(('0.0.0.0', 8000), SimpleHTTPRequestHandler)
+    server.serve_forever()
+
+
+if __name__ == '__main__':
+    main()
