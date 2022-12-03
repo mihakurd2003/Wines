@@ -1,4 +1,3 @@
-
 import pandas as pd
 from collections import defaultdict
 
@@ -12,4 +11,3 @@ def wines_processing(path):
         wines[wine['Категория']] = [item for item in wines_json if item['Категория'] == wine['Категория']]
 
     return wines
-
