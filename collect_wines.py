@@ -1,11 +1,11 @@
+
 import pandas as pd
-import json
 from collections import defaultdict
 
 
 def wines_processing(path):
-    wines_excel = pd.read_excel(path)
-    wines_json = json.loads(wines_excel.to_json(orient='records', force_ascii=False))
+    wines_excel = pd.read_excel(path, keep_default_na=False)
+    wines_json = wines_excel.to_dict(orient='records')
 
     wines = defaultdict(list)
     for wine in wines_json:

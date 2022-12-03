@@ -20,7 +20,7 @@ def main():
     rendered_page = template.render(
         years_old=years_old,
         word_form=get_number_end(years_old),
-        wines=wines_processing(args.path),
+        drinks=wines_processing(args.path),
     )
 
     with open('index.html', 'w', encoding="utf-8") as file:
