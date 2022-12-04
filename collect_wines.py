@@ -3,7 +3,7 @@ from collections import defaultdict
 import json
 
 
-def processing_wines(path):
+def process_wines(path):
     wines_excel = pd.read_excel(path, keep_default_na=False)
     wines_before_processing = wines_excel.to_dict(orient='records')
 

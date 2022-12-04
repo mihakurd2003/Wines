@@ -2,7 +2,7 @@ from http.server import HTTPServer, SimpleHTTPRequestHandler
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 import argparse
 from year_calc import years_old, get_number_end
-from collect_wines import processing_wines
+from collect_wines import process_wines
 
 
 def main():
@@ -20,7 +20,7 @@ def main():
     rendered_page = template.render(
         years_old=years_old,
         word_form=get_number_end(years_old),
-        drinks=processing_wines(args.path),
+        drinks=process_wines(args.path),
     )
 
     with open('index.html', 'w', encoding="utf-8") as file:
